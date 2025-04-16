@@ -1,0 +1,42 @@
+
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- develop
+
+pool:
+  name: SRFAppAgentPool
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.18.x'
+  displayName: 'Install Node.js'
+
+- task: Npm@1
+  displayName: "Install Angular cli"
+  inputs:
+    command: "custom"
+    customCommand: "install --location=global @angular/cli@17.0.0"
+
+- task: Npm@1
+  displayName: 'Install NPM Packages'
+  inputs:
+    command: 'custom'
+    customCommand: 'install --legacy-peer-deps'
+  
+- task: CmdLine@2
+  displayName: "Build Angular app"
+  inputs:
+    script: 'ng build -c=development'
+
+- task: PublishBuildArtifacts@1
+  displayName: "Publish Artifact: Angular"
+  inputs:
+    PathtoPublish: "$(Build.SourcesDirectory)/www"
+    FileCopyOptions:
+    ArtifactName: "Angular"
+    publishLocation: "Container"

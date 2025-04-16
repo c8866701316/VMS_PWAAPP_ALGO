@@ -1,0 +1,141 @@
+ion-button {
+  --background: none;
+  // text color => #6c757d;
+  // --background-hover: #e1e3ea;
+  // --background-activated: #e1e3ea;
+  // --background-focused: #88f4be;
+
+  --color: white;
+
+  --border-radius: 10px;
+  --border-color: none;
+  --border-style: solid;
+  --border-width: 0px;
+
+  // --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+  // --ripple-color: deeppink;
+
+  --padding-top: 15px;
+  --padding-bottom: 15px;
+}
+
+.button-bottom {
+  // --border: 1px solid white;
+
+  // --color: #6c757d;
+
+  // --border-radius: 10px;
+  // --border-style: solid;
+  // --border-width: 0px;
+  // --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0);
+
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+// .button-bottom:hover {
+//   --color: black;
+// }
+
+ion-image{
+  width: 50px;
+  height: 50px;
+}
+
+ion-col.column {
+  border: solid 1px #fff;
+  color: black;
+  text-align: center;
+  display: grid;
+  align-items: center;
+  padding: 0px 10px;
+}
+
+.illustration{
+  height: 300px;
+}
+
+@media (max-height: 700px) {
+  .illustration{
+    height: 150px;
+  }
+}
+
+ion-modal#example-modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#example-modal h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal#example-modal ion-icon {
+  margin-right: 6px;
+
+  width: 48px;
+  height: 48px;
+
+  padding: 4px 0;
+
+  color: #aaaaaa;
+}
+
+ion-modal#example-modal .wrapper {
+  margin-bottom: 10px;
+}
+.toolbar-content{
+  display: none !important;
+}
+.custom-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 27px;
+  justify-content: center;
+}
+.open-custom-dialog{
+  // width: 20%;
+
+  // border-radius: 36px;
+  margin-top: 15px;
+  // box-shadow: 0 4px 17px 3px #8EAFDE;
+  // box-shadow: 0 0 20px rgba(255, 0, 0, 0.5) 
+
+
+}
+.underline{
+  text-decoration: underline;
+  font-weight: bold;
+  margin-top: 15px;
+}
+// .custom-background{
+//   margin-top: 20px;
+// }
+
+.button-class{
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+// .bottom-div {
+//   width: 100%;
+//   height: 200px !important;
+//   background: url('../../assets/icon/background.png') !important;
+// }
+.background-container {
+  background-image: url('../../assets/icon/das_background.svg'); /* Replace this URL with the path to your image */
+  background-size: cover;
+  position: absolute;
+  bottom: 0;
+  // background-position: center;
+  height: 45%; /* Set height to fill the content area */
+  width: 100%; /* Set width to fill the content area */
+}
+
+.capitalize {
+  text-transform: capitalize;
+}

@@ -1,0 +1,29 @@
+.background-container {
+    background-image: url('../../../assets/icon/Group.png'); /* Replace this URL with the path to your image */
+    background-size: cover;
+    background-position: center;
+    height: 500px; /* Set height to fill the content area */
+    width: 100%; /* Set width to fill the content area */
+    margin-top: 5px;
+  }
+  .form-container {
+    padding: 20px; /* Adjust padding as needed */
+  }
+  .inputclass{
+    background-color: #ECECEC !important;
+    border-radius: 3px;
+    border: 1px solid #4488D9;
+  }
+  .toolbar-container{
+    min-height: opx !important;
+  }
+  .inputclass{
+    margin: 15px 0px;
+    background-color: #ECECEC !important;
+    border-radius: 5px;
+    border: 2px solid #4488D9;
+    color: #7C7C7C;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2) !important
+}
