@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <!-- <ion-toolbar> -->
+    <!-- <ion-title>dashbxvxcvoard</ion-title> -->
+  <!-- </ion-toolbar> -->
+</ion-header>
+
+<ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+  <ng-template>
+    <div class="wrapper">
+      <p style="display: flex; width: 100%; justify-content: center;">Do you want to logout ?</p>
+
+      <ion-list lines="none">
+        <ion-item button="true" detail="false">
+          <!-- <ion-icon name="person-circle"></ion-icon> -->
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                <ion-button expand="block" (click)="logout()" style="--background:rgba(0, 117, 255, 0.48);color: black;font-weight: 700;">Yes</ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button color="dark" expand="block" (click)="dismiss()">No</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ng-template>
+</ion-modal>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content> 
+  </ion-refresher>
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">dashboard</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  <div style="height: 100%;">
+    <div class="custom-div">
+      <h2 class="underline">W E L C O M E</h2>
+      <!-- <ion-avatar style="width: 95px; height: 95px; margin-bottom: 10px;" > -->
+      <img style="margin-bottom: 10px;" alt="Silhouette of a person's head" [src]="userInfo.value.url" (error)="handleImageError($event)"/>
+        <!-- <img   alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" /> -->
+      <!-- </ion-avatar> -->
+      <h3 class="underline capitalize" id="open-custom-dialog">{{userInfo.value.userId}}</h3>
+    <!-- <ion-avatar> -->
+      <!-- <img alt="Silhouette of a person's head" [src]="userInfo.value.url"/> -->
+    <!-- </ion-avatar> -->
+      <ion-col size="6" class="custom-background">
+        <ion-button expand="block" [routerLink] = "['/','gatekeeper','check-in-out']" style="--background:rgba(0, 117, 255, 0.48); margin-top: 10px;">Check In</ion-button>
+      </ion-col>
+      <ion-col size="6" class="custom-background">
+        <ion-button color="dark"expand="block" [routerLink]="['/','gatekeeper','check-out']" style="--background:rgba(0, 0, 0, 0.25)">Check Out</ion-button>
+      </ion-col>
+    </div>
+    <div class="background-container">
+      <!-- <img src="../../assets/icon/background-das.png" style="position: absolute; bottom: 0;"/> -->
+      <div style="position: absolute; bottom: 44%; transform: translateY(50%); width: 100%; padding-left: 20px; padding-right: 20px; ">
+        <ion-button   style="background-color: transparent; border: 2px solid white; border-radius: 14px;margin-bottom: 25px; font-size: 17px;" [routerLink]="['/', 'gatekeeper', 'pre-registration']" expand="block">Registration</ion-button>
+        <!-- <ion-button  style="background: none; border: 2px solid white; border-radius: 14px;" [routerLink]="['/', 'gatekeeper', 'registration']" expand="block">Registration & Check In</ion-button> -->
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- <ion-grid style="margin-top: 10px;">
+    <ion-row class="ion-justify-content-end" style="padding-left: 7px; padding-right: 7px;">
+      <ion-col class="column" size="auto"style="margin-right :195px;
+      margin-top:-22px;"> Paul Melone </ion-col>
+      <ion-col size="auto"> 
+        <ion-avatar>
+          <img id="open-custom-dialog" alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" style="margin-left:-350px ;
+          width: 60%;
+          height: 60%;" />
+        </ion-avatar>
+      </ion-col>
+ 
+    </ion-row>
+  </ion-grid> -->
+  <!-- <div style="padding-left: 15px;">
+    <h3>Welcome</h3>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button expand="block" [routerLink] = "['/','gatekeeper','check-in-out']">Check In</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button color="dark"expand="block" [routerLink]="['/','gatekeeper','check-in-out']">Check Out</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <!-- <ion-row style="padding-left: 15px; padding-right: 15px;"> -->
+    <!-- <ion-col size="12" style="background-color: #f0f0f0; display: grid; place-items: center; padding: 0px;" class="illustration">
+     <ion-img
+        style="width: 100%; height: 100%;object-fit: cover;"
+        src="../../assets/school.jpeg"
+        alt="School Image"
+     >
+     </ion-img>
+    </ion-col> -->
+  <!-- </ion-row> -->
+
+</ion-content>

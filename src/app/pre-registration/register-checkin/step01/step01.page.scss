@@ -1,0 +1,218 @@
+.inputclass{
+    // margin-top: 15px;
+    // margin-bottom: 15px;
+    // padding-left:10px !important;
+    // padding-right: 10px !important;
+    margin: 15px 0px;
+    background-color: #ECECEC !important;
+    border-radius: 5px;
+    border: 2px solid #4488D9;
+    color: #7C7C7C;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2) !important
+}
+.buttonclass{
+    margin-top: 15px;
+    margin-bottom: 15px;  
+    width: 39%;
+    padding-left:10px !important;
+    color: #6c757d;
+
+}
+// ::ng-deep{
+//     .input-wrapper.sc-ion-input-md {
+//         background: #ffffff !important;
+//     }
+// }
+
+.inputclass:active {
+    border-bottom: none !important;
+}
+.ionclass{
+    border-radius: 15px;
+    background-color: #f0f0f0;
+    margin-top: 15px !important;
+    border-bottom: 0px none !important;
+
+}
+
+.sc-ion-input-md-h {
+    --highlight-color-focused:none;
+}
+
+ion-input {
+    padding-left:10px !important;
+
+}
+ion-select {
+    padding-left:10px !important;
+}
+:host ::ng-deep .select-wrapper-inner{
+    display: flex !important;
+    justify-content: space-between !important;
+     width: 100% !important;
+}
+ion-input.custom {
+    --color: #fff;
+    --placeholder-color: #424141;
+    --placeholder-opacity: 0.8;
+    --padding-bottom: 10px;
+    --padding-end: 10px;
+    --padding-start: 10px;
+    --padding-top: 10px;
+  }
+
+  .native-wrapper.sc-ion-input-md {
+    border-bottom: none!important;
+  }
+  .button-bottom {
+    --background: #f0f0f0;
+    --color: #6c757d; 
+
+    --border-radius: 10px;
+    --border-style: solid;
+    --border-width: 0px;
+    --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0);
+    --background:rgba(0, 117, 255, 0.48) !important;
+
+        margin-top: 15px;
+    // padding-top: 15px;
+    // padding-bottom: 15px;
+  }
+
+  .button-bottom:hover {
+    // --background: #6C757D;
+    --color: black;
+  }
+
+  .circular-image-container {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    overflow: hidden; /* This ensures the image is clipped to the circular shape */
+   }
+   
+   .circular-image-container ion-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This ensures the image covers the entire area of the container */
+   }
+
+  ::ng-deep {
+    .step {
+        width: 50% !important;
+      }
+      ol{
+        padding-left: 0px !important;
+      }
+  }
+
+  ::ng-deep {
+    .ng-select .ng-clear-wrapper{
+        --width: 200px !important;
+    }
+}
+
+#host-modal {
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+  
+  #host-modal h1 {
+    margin: 20px 20px 10px 20px;
+  }
+
+   #host-modal .radio-wrapper{
+    --width: fit-content;
+  }
+  #host-modal ion-icon {
+    margin-right: 6px;
+  
+    width: 48px;
+    height: 48px;
+  
+    padding: 4px 0;
+  
+    color: #aaaaaa;
+  }
+  
+  #host-modal .host-wrapper {
+    margin-bottom: 10px;
+  }
+
+  #city-modal {
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+  
+  #city-modal h1 {
+    margin: 20px 20px 10px 20px;
+  }
+
+   #city-modal .radio-wrapper{
+    --width: fit-content;
+  }
+  #city-modal ion-icon {
+    margin-right: 6px;
+  
+    width: 48px;
+    height: 48px;
+  
+    padding: 4px 0;
+  
+    color: #aaaaaa;
+  }
+  
+  #city-modal .city-wrapper {
+    margin-bottom: 10px;
+  }
+
+.select-style {
+    padding: 5px;
+    // background: url('../../../../assets/icon/select-icon.svg') no-repeat right center; 
+    border: 2px solid #4488D9;
+    font-weight: 700;
+      font-family: Arial, Helvetica, sans-serif;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2) !important;
+      color: #7C7C7C;
+      border-radius: 5px;
+  }
+
+  
+.host-select-button {
+  --background: transparent;
+  --box-shadow: transparent;
+  color: #3880ff;
+}
+
+.radio-item {
+  display: -webkit-inline-box;
+}
+
+.custom-stepper{
+  padding-top: 20px;
+}
+.city-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.host-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollable-content {
+  max-height: calc(70vh - 150px); /* Adjust based on your needs */
+  overflow-y: auto;
+}
