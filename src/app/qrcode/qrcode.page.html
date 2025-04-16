@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="display: flex; justify-content: space-between; align-items: center;">
+    <ion-title style="flex: 1; text-align: center;">QRcode</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="toggleCamera()"><ion-icon style="font-size: 32px;" name="camera-reverse-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title style="display: block; text-align: center">qrcode</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+    <div id="reader" width="600px"></div>
+    <ion-modal id="example-modal" #modal [isOpen]="!!alertMessage">
+      <ng-template>
+        <div class="wrapper">
+          <div class="ion-text-center">
+            <!-- <img *ngIf="!imageURL && response500 === 200" class="alert-image"  src="https://ionicframework.com/docs/img/demos/avatar.svg">
+            <img *ngIf="imageURL"  class="alert-image" [src]="imageURL"> -->
+            <img *ngIf="response500"  class="alert-image" [src]="imageURL"  (error)="handleImageError($event)">
+            <h5 style="padding: 5px; display: flex;justify-content: center;align-items: center;">{{alertMessage}}
+              <ion-icon *ngIf="response500" name="checkmark-circle" color="success" class="alert-icon"></ion-icon>
+              <ion-icon *ngIf="!response500" name="close-circle" color="danger" class="alert-icon"></ion-icon>
+          </h5>
+          <div style="font-weight: 500;margin-top: -20px;">
+            {{name}}
+          </div>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+</ion-content>

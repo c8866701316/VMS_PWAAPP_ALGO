@@ -1,0 +1,143 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- <ion-button (click)="goBack()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button> -->
+      <!-- <ion-back-button></ion-back-button> -->
+    </ion-buttons>
+    <ion-title style="display: block; text-align: center">Check Out</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <!-- <ion-title size="large">check_in_out</ion-title> -->
+    </ion-toolbar>
+  </ion-header>
+  <ion-row style="display: flex; width: 100%; justify-content: space-between;">
+    <ion-segment [(ngModel)]="selectedOption">
+      <ion-segment-button value="qrCode">
+        <ion-label>QR Code</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="inviteCode">
+        <ion-label>Invite Code</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-row>
+
+  <div [hidden]="selectedOption != 'qrCode'">
+    <div class="scan-wrapper">
+      <ion-img src="../../assets/icon/Vector.png" class="scan-img"></ion-img>
+      <div class="scan-button" (click)="startScanner()">
+        <p>Click here to start scanner</p>
+      </div>
+      <ion-text>Or</ion-text>
+      <div class="scan-button" *ngIf="showimagefile"  (click)="openFileInput()">
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" #fileInput style="display: none;">
+        <p style="cursor: pointer;">Scan an Image File</p>
+      </div>
+    </div>
+  
+      <div id="readerout"></div>
+      <!-- <div  id="qr-reader-results" class="qr-reader-results"></div> -->
+      <div class="cameraOption" *ngIf="showcameraOption">
+        <!-- <ng-container *ngFor="let device of getDeviceID; let i = index">
+          <ion-button color="primary" size="small" shape="round" expand="full"
+            (click)="selectCameraOption(i)">{{device.label}}</ion-button>
+          </ng-container> -->
+          <ion-button  size="small" shape="round"
+          style="width: 50%; height: 24px; --border-radius: 45px; --background:rgba(0, 117, 255, 0.48) ;color: black;font-weight: 700;"
+          (click)="stopScanner()">Stop Scanner</ion-button>
+      </div>
+  </div>
+
+  <!-- <div class="scan-wrapper" *ngIf="selectedOption === 'qrCode'">
+    <ion-img src="../../assets/icon/Vector.png" class="scan-img"></ion-img>
+    <ion-button class="scan-button" (click)="scan()" [disabled]="!isSupported">Scan using camera directly</ion-button>
+    <ion-text>Or</ion-text>
+    <ion-button class="scan-button" (click)="readBarcodeFromImage()" [disabled]="!isSupported">Scan an Image File</ion-button>
+  </div> -->
+
+  <div *ngIf="selectedOption === 'inviteCode'">
+    <!-- Content for Invite Code selection -->
+    <ion-row style="display: flex; align-items: center; justify-content: space-between;  margin: 16px;">
+      <ion-col size="10" style="padding-right: 20px;">
+        <div style="width: 100%; border: 1px solid #4488D9; border-radius: 10px;padding-left: 10px;">
+          <ion-input fill="none" [(ngModel)]="inviteCode" placeholder="Enter Invite Code..."></ion-input>
+        </div>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button  size="default" (click)="getInvitecode()"
+          [disabled]="!inviteCode || (isLoading$ | async)">
+          <span style="padding: 2px;" *ngIf="!(isLoading$ | async)">Get</span>
+          <ion-spinner *ngIf="isLoading$ | async"
+            class="spinner-border spinner-border-sm align-middle ms-2"></ion-spinner>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+  
+  
+  <!-- Elements to conditionally display -->
+  
+  <div [hidden]="!(selectedOption === 'qrCode' && isGetVisitorSuccessResponseByQR) && !(selectedOption === 'inviteCode' && isGetVisitorSuccessResponseByText)">  
+    <ion-card *ngIf="!isError">
+      <div style="display: flex; width: 100%; justify-content: center;padding: 20px;" *ngIf="(visitorDetailsLoading$ | async)">
+        <ion-spinner>Loading...</ion-spinner>
+      </div>
+      <ion-card-content style="padding: 0px;" *ngIf="!(visitorDetailsLoading$ | async)">
+        <ion-row
+          style="display: flex; width: 100%; justify-content: start; align-items: center; margin: 10px 0px; padding: 0px 10px;">
+          <ion-col style="display: flex; justify-content: center;"> VISITOR DETAILS </ion-col>
+        </ion-row>
+        <ion-row style="display: flex; justify-content: center; align-items: center;">
+          <ion-avatar style="width: 100px; height: 100px; margin-bottom: 10px; " >
+            <img alt="Silhouette of a person's head" [src]="visitor.urlFileName" (error)="handleImageError($event)"/>
+            </ion-avatar>
+        </ion-row>
+        <ion-row
+          style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 10px;">
+          <ion-col> First Name </ion-col>
+          <ion-col style="font-weight: bold;"> {{ visitor.firstName }} </ion-col>
+        </ion-row>
+        <ion-row
+          style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 10px;">
+          <ion-col> Last Name </ion-col>
+          <ion-col style="font-weight: bold;"> {{ visitor.lastName }} </ion-col>
+        </ion-row>
+
+        <ion-row
+          style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 10px;">
+          <ion-col> Mobile Number </ion-col>
+          <ion-col style="font-weight: bold;"> {{ visitor.phoneNumber }}</ion-col>
+        </ion-row>
+        <ion-row
+          style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 10px;">
+          <ion-col> Email </ion-col>
+          <ion-col style="font-weight: bold;"> {{ visitor.email }} </ion-col>
+        </ion-row>
+        <!-- <ion-row
+          style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 10px;">
+          <ion-col> Country </ion-col>
+          <ion-col style="font-weight: bold;"> {{ visitor.countryName }} </ion-col>
+        </ion-row> -->
+
+      </ion-card-content> 
+    </ion-card>
+  </div>
+  <div *ngIf="(selectedOption === 'qrCode' && isGetVisitorSuccessResponseByQR || selectedOption === 'inviteCode' && isGetVisitorSuccessResponseByText) && !isError" style="display: flex; justify-content: center;">
+    <!-- <ion-button  class="mb-3" (click)="onGeneratePass()" [disabled]="(passPrintLoading$ | async)" style="width: 100%; --background-color: rgba(0, 117, 255, 0.48) !important; color: black;font-weight: 700;">
+      <ion-spinner *ngIf="passPrintLoading$ | async" slot="end"></ion-spinner>
+      <span *ngIf="!(passPrintLoading$ | async)">Print</span>
+    </ion-button> -->
+    
+    <ion-button  (click)="checkOut()" [disabled]="!(qrResult.visitorId && qrResult.inviteId) || (checkOutLoading$ | async)" style="--background-color: rgba(0, 117, 255, 0.48) !important; color: black;font-weight: 700;">
+      <ion-spinner *ngIf="checkOutLoading$ | async" slot="end"></ion-spinner>
+      <span *ngIf="!(checkOutLoading$ | async)">Check Out</span>
+    </ion-button>
+ </div>
+
+</ion-content>

@@ -1,0 +1,268 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Register</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <!-- <ion-title size="large">step01</ion-title> -->
+    </ion-toolbar>
+  </ion-header>
+  <ng-stepper #cdkStepper [linear]="true" class="custom-stepper">
+    <cdk-step>
+      <ng-template cdkStepLabel>
+        <div class="step-bullet">1</div>
+        <div class="step-title">Step 01 </div>
+      </ng-template>
+      <div #step1>
+        <form action="" [formGroup]="visitorForm">
+          <ion-list class="ion-padding">
+            <ion-row>
+              <ion-input label="First Name" label-placement="floating" fill="solid" placeholder="Enter First Name"
+                class="inputclass" formControlName="firstName"></ion-input>
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['firstName'].invalid && visitorForm.controls['firstName'].touched">
+                <small *ngIf="visitorForm.controls['firstName'].errors?.['required']">*First Name is required.</small>
+              </ion-text>
+              <ion-input label="Last Name" label-placement="floating" fill="solid" placeholder="Enter Last Name"
+                class="inputclass" formControlName="lastName"></ion-input>
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['lastName'].invalid && visitorForm.controls['lastName'].touched">
+                <small *ngIf="visitorForm.controls['lastName'].errors?.['required']">*Last Name is required.</small>
+              </ion-text>
+              <ion-input label="Phone" label-placement="floating" fill="solid" placeholder="Enter phone"
+                class="inputclass" formControlName="phone"></ion-input>
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['phone'].invalid && visitorForm.controls['phone'].touched">
+                <small *ngIf="visitorForm.get('phone')?.errors?.['pattern']">*Please enter a valid phone number.</small>
+                <small *ngIf="visitorForm.controls['phone'].errors?.['required']">*Phone Number is required.</small>
+              </ion-text>
+              <ion-input label="Email" label-placement="floating" fill="solid" placeholder="Enter Email"
+                class="inputclass" formControlName="email"></ion-input>
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['email'].invalid && visitorForm.controls['email'].touched">
+                <small *ngIf="visitorForm.controls['email'].errors?.['required']">*Email is required.</small>
+                <small *ngIf="visitorForm.get('email')?.errors?.['email']">*Please enter a valid email.</small>
+              </ion-text>
+              <ion-input label="Address" label-placement="floating" fill="solid" placeholder="Enter Address"
+                class="inputclass" formControlName="address"></ion-input>
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['address'].invalid && visitorForm.controls['address'].touched">
+                <small *ngIf="visitorForm.controls['address'].errors?.['required']">*Address is required.</small>
+              </ion-text>
+              <ion-input label="Personal Id" label-placement="floating" fill="solid" placeholder="Enter Personal Id"
+              class="inputclass" formControlName="idProof"></ion-input>
+            <ion-text color="danger"
+              *ngIf="visitorForm.controls['idProof'].invalid && visitorForm.controls['idProof'].touched">
+              <small *ngIf="visitorForm.controls['idProof'].errors?.['required']">*Personal Id is required.</small>
+            </ion-text>
+              <ion-input label="Reason" label-placement="floating" fill="solid" placeholder="Enter Reason"
+                class="inputclass" formControlName="reason"></ion-input>
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['reason'].invalid && visitorForm.controls['reason'].touched">
+                <small *ngIf="visitorForm.controls['reason'].errors?.['required']">*Reason is required.</small>
+              </ion-text>
+              <!-- <ion-select label="whom to meet" placeholder="select whom to meet" label-placement="floating" fill="solid" class="inputclass">
+                <ion-select-option value="apples">principal</ion-select-option>
+                <ion-select-option value="oranges">Teacher</ion-select-option>
+              </ion-select> -->
+              <!-- <ion-select placeholder="Whom To Meet"  class="inputclass" formControlName="host" fill="solid">
+                <ion-select-option *ngFor="let host of hostlistData" [value]="host">{{ host.text }}</ion-select-option>
+              </ion-select>
+              <ion-text color="danger" *ngIf="visitorForm.controls['host'].invalid && visitorForm.controls['host'].touched">
+                <small *ngIf="visitorForm.controls['host'].errors?.['required']">*Please select Whom To Meet.</small>
+              </ion-text> -->
+              <ion-input label="Whom To Meet" label-placement="floating" fill="solid" placeholder="Whom To Meet"
+                id="whom-to-meet-dialog-register" [value]="host.value?.text" class="inputclass" readonly></ion-input>
+                
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['host'].invalid && visitorForm.controls['host'].touched">
+                <small *ngIf="visitorForm.controls['host'].errors?.['required']">*Please select whom to meet.</small>
+              </ion-text>
+              <ion-modal id="host-modal" #modalhost trigger="whom-to-meet-dialog-register">
+                <ng-template>
+                  <div class="host-wrapper">
+                    <h1 style="display:none"></h1>
+                    <ion-item-divider></ion-item-divider>
+                    <ion-searchbar [debounce]="1000" (ionInput)="filterHostList($event)"></ion-searchbar>
+                    <ion-list no-lines>
+                      <div style="display: flex; width: 100%; justify-content: center;">
+                        <ion-spinner *ngIf="(isSearchLoading$ | async)">Loading...</ion-spinner>
+                      </div>
+                      <ion-radio-group formControlName="host" *ngIf="!(isSearchLoading$ | async)">
+                        <ion-item lines="none" *ngFor="let host of filteredHostList">
+                          <ion-radio labelPlacement="end" [value]="host" class="ion-border w-100 radio-item" (ionSelect)="hostRadioSelect(host)">
+                            <ion-label> {{ host.text }}</ion-label>
+                          </ion-radio>
+                        </ion-item>
+                      </ion-radio-group>
+                    </ion-list>
+                    <ion-item-divider></ion-item-divider>
+                    <div style="display: flex;justify-content: end;">
+                      <ion-button (click)="clearHostListItem(); modalhost.dismiss()" class="host-select-button">CANCEL</ion-button>
+                      <ion-button (click)="selectHostItem(); modalhost.dismiss()"  class="host-select-button">OK</ion-button>
+                    </div>
+
+                  </div>
+                </ng-template>
+              </ion-modal>
+              <ion-select placeholder="Category" class="inputclass" formControlName="category" fill="solid">
+                <ion-select-option *ngFor="let category of categorylistData" [value]="category">{{ category.text
+                  }}</ion-select-option>
+              </ion-select>
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['category'].invalid && visitorForm.controls['category'].touched">
+                <small *ngIf="visitorForm.controls['category'].errors?.['required']">*Please select Category.</small>
+              </ion-text>
+              <div *ngIf="isAddedOtherCategory">
+                <ion-input label="Other category" fill="solid" placeholder="Enter Other Category" class="inputclass"
+                  label-placement="floating" formControlName="OtherCategory"></ion-input>
+                <ion-text color="danger"
+                  *ngIf="visitorForm.controls['OtherCategory'].invalid && visitorForm.controls['OtherCategory'].touched">
+                  <small *ngIf="visitorForm.controls['OtherCategory'].errors?.['required']">*Please select
+                    Category.</small>
+                </ion-text>
+              </div>
+<!-- 
+              <ion-select formControlName="country" placeholder="Country" class="inputclass" fill="solid">
+                <ion-select-option *ngFor="let country of countriesList" [value]="country">{{ country.name
+                  }}</ion-select-option>
+              </ion-select>
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['country'].invalid && visitorForm.controls['country'].touched">
+                <small *ngIf="visitorForm.controls['country'].errors?.['required']">*Please select country.</small>
+              </ion-text>
+              <ion-select formControlName="state" placeholder="State" class="inputclass" fill="solid">
+                <ion-select-option *ngFor="let state of stateList" [value]="state">{{ state.name }}</ion-select-option>
+              </ion-select> --> 
+              <!-- <ion-text color="danger"
+                *ngIf="visitorForm.controls['state'].invalid && visitorForm.controls['state'].touched">
+                <small *ngIf="visitorForm.controls['state'].errors?.['required']">*Please select state.</small>
+              </ion-text> -->
+              <ion-select formControlName="city" placeholder="City" class="inputclass" fill="solid">
+                <ion-select-option *ngFor="let city of citiesList" [value]="city">{{ city.name }}</ion-select-option>
+              </ion-select>
+              <ion-text color="danger"
+                *ngIf="visitorForm.controls['city'].invalid && visitorForm.controls['city'].touched">
+                <small *ngIf="visitorForm.controls['city'].errors?.['required']">*Please select city.</small>
+              </ion-text>
+              <!-- <ion-modal id="city-modal" #modalcity trigger="city-dialog">
+                <ng-template>
+                  <div class="city-wrapper">
+                    <h1 style="display:none"></h1>
+                    <ion-item-divider></ion-item-divider>
+                    <ion-searchbar [debounce]="1000" (ionInput)="filterCityList($event)"></ion-searchbar>
+                    <div class="scrollable-content">
+                      <ion-list no-lines>
+                        <div style="display: flex; width: 100%; justify-content: center;">
+                          <ion-spinner *ngIf="(iscityLoading$ | async)">Loading...</ion-spinner>
+                        </div>
+                        <ion-radio-group formControlName="city" *ngIf="!(iscityLoading$ | async)">
+                          <ion-item lines="none" *ngFor="let city of filteredCityList">
+                            <ion-radio labelPlacement="end" [value]="city" class="ion-border w-100 radio-item" (ionSelect)="cityRadioSelect(city)">
+                              <ion-label> {{ city.name }}</ion-label>
+                            </ion-radio>
+                          </ion-item>
+                        </ion-radio-group>
+                      </ion-list>
+                      <ion-item-divider></ion-item-divider>
+                    </div>
+                      <div style="display: flex; justify-content: end;">
+                        <ion-button (click)="clearCityListItem(); modalcity.dismiss()" class="host-select-button">CANCEL</ion-button>
+                        <ion-button (click)="selectCityItem(); modalcity.dismiss()" class="host-select-button">OK</ion-button>
+                      </div>
+                      
+                    </div>
+                  </ng-template>
+               </ion-modal> -->
+            </ion-row>
+
+            <div style="display: flex;justify-content: center; ">
+              <ion-button
+                style="width: 50%; height: 24px; --border-radius: 45px; --background:rgba(0, 117, 255, 0.48);color: black;font-weight: 700;"
+                (click)="goToNextStep()">Next</ion-button>
+            </div>
+          </ion-list>
+        </form>
+      </div>
+    </cdk-step>
+
+    <cdk-step>
+      <ng-template cdkStepLabel>
+        <div class="step-bullet" (click)="handleStepClick($event)">2</div>
+        <div class="step-title" (click)="handleStepClick($event)">Step 02</div>
+      </ng-template>
+      <div #step2>
+        <!-- <ion-row size="200px" style="display: flex; width: 100%; align-items: center; justify-content: center; margin-top: 50px;"> -->
+        <!-- <ion-avatar style="width: 100px; height: 100px;">
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          </ion-avatar>
+        </ion-row> -->
+        <ion-card>
+          <ion-card-content style="padding: 0px;">
+            <div style="width: 100%; height: 100px; background: rgba(0, 117, 255, 0.48); position: relative; ">
+              <!-- <p
+                style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); margin: 0; color: white; font-size: 16px; font-weight: bold;">
+                Pass</p> -->
+
+              <ion-avatar *ngIf="!selectedImage"
+                style="width: 100px; height: 100px; position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%);">
+                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg"
+                  (click)="openImagePicker()" />
+              </ion-avatar>
+              <div *ngIf="selectedImage" class="circular-image-container">
+                <div (click)="openImagePicker()" style="width: 100%; height: 100%; position: relative;">
+                  <ion-img *ngIf="selectedImage" [src]="selectedImage.webPath"></ion-img>
+                </div>
+              </div>
+              <!-- <input #fileInput type="file" (change)="onFileInputChange($event)" style="display: none;" /> -->
+              <!-- <ion-img *ngIf="selectedImage" [src]="selectedImage"></ion-img> -->
+            </div>
+            <ion-row
+              style="display: flex; width: 100%; justify-content: space-between; align-items: center; margin-top: 50px; padding: 0px 10px;">
+              <ion-col style="font-weight: 700;">First Name </ion-col>
+              <ion-col> {{step1Data.firstName }} </ion-col>
+            </ion-row>
+            <ion-row
+              style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 10px;">
+              <ion-col style="font-weight: 700;"> Last Name </ion-col>
+              <ion-col> {{step1Data.lastName }} </ion-col>
+            </ion-row>
+            <ion-row
+              style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 10px;">
+              <ion-col style="font-weight: 700;"> Email </ion-col>
+              <ion-col> {{step1Data.email }} </ion-col>
+            </ion-row>
+            <ion-row
+              style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 10px;">
+              <ion-col style="font-weight: 700;"> Phone </ion-col>
+              <ion-col> {{step1Data.phone }} </ion-col>
+            </ion-row>
+            <ion-row style="display: flex; width: 100%; justify-content: center;">
+              <!-- <ion-img style="width: 150px; height: 150px;" src="../../assets/qrcodes.jpeg" alt="School Image"> </ion-img> -->
+            </ion-row>
+
+            <div style="padding: 10px; margin-bottom: 10px; " (click)="submitOrContinue()">
+              <ion-button style="--background-color: rgba(0, 117, 255, 0.48); color: black;font-weight: 700;"
+                class="button-bottom" expand="block"> <ion-spinner *ngIf="(isAddLoading$ | async)"></ion-spinner>
+                <span *ngIf="!(isAddLoading$ | async)">Add</span></ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+      </div>
+    </cdk-step>
+  </ng-stepper>
+
+
+
+</ion-content>

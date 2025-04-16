@@ -1,0 +1,7 @@
+{
+  "name": "VMS",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
